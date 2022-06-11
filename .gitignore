@@ -1,0 +1,10 @@
+.venv
+__pycache__
+*.pyc
+OutputData
+old
+DataAppWeek48.xlsx
+DataAppWeek52.xlsx
+processes.pbix
+sharepoint.xlsx
+sharepoint1.xlsx
