@@ -13,12 +13,6 @@ class Home():
     root: tk.Tk
     excelIcon: tk.PhotoImage
     viewIcon: tk.PhotoImage
-    # PathImport11: str
-    # df1: object
-    # import_data_1: object
-    # PathImport2: str
-    # df2: pandas.core.frame.DataFrame
-    # import_data_2: object
 
     def display(self):
 
@@ -71,12 +65,6 @@ class Home():
             source = "SAP",
             excelIcon = self.excelIcon,
             viewIcon = self.viewIcon,
-            # PathImport1111 = self.PathImport11,
-            # df1 = self.df1,
-            # import_data_1 = self.import_data_1,
-            # PathImport2 = self.PathImport2,
-            # df2 = self.df2,
-            # import_data_2 = self.import_data_2,
         ).display()
         
     def Window_EuroDataHos_vs_Sharepoint(self):
@@ -86,11 +74,5 @@ class Home():
             source = "EuroDataHOS",
             excelIcon = self.excelIcon,
             viewIcon = self.viewIcon,
-            # PathImport1111 = self.PathImport11,
-            # df1 = self.df1,
-            # PathImport2 = self.PathImport2,
-            # df2 = self.df2,
-            # import_data_1 = self.import_data_1,
-            # import_data_2 = self.import_data_2,
         ).display()
 

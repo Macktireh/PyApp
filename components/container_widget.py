@@ -14,24 +14,22 @@ class Widget():
     y: float
     import_data_from_excel: object
     view_data: object
-    setState: object
     path: str = ""
     df: pandas.core.frame.DataFrame = pandas.DataFrame()
 
-    def display(self):
-            
+    def display(self, path):
         Frame = tk.LabelFrame(
             self.root, 
             text=self.title, 
             font=("Helvetica 10 bold"), 
-            fg="#004C8C", labelanchor='n')
+            fg="#004C8C", labelanchor='n'
+        )
         Frame.place(relx=self.x, rely=self.y, relheight=0.35, relwidth=0.96)
-
             
-        VarLabelPath = tk.StringVar()
-        VarLabelPath.set(self.path)
-        LabelPath = tk.Label(Frame, textvariable=VarLabelPath, bg="#FAEBD7")
-        LabelPath.pack(fill="x")
+        self.VarLabelPath = tk.StringVar()
+        self.VarLabelPath.set('Aucun fichier Excel importer')
+        self.LabelPath = tk.Label(Frame, textvariable=self.VarLabelPath, bg="#FAEBD7")
+        self.LabelPath.pack(fill="x")
         
         # Button import avec icon
         excelBtn = tk.Button(
@@ -69,6 +67,7 @@ class Widget():
         ).place(relx=0.35, rely=0.8)
 
     def run_action(self):
-        self.import_data_from_excel()
-        self.path, self.df = self.setState()
-        print(self.path, self.df)
+        self.path, self.df = self.import_data_from_excel()
+        self.VarLabelPath.set(f'{self.path}')
+        # self.LabelPath.configure(text=f'{self.path}')
+        # print(self.path)

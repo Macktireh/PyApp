@@ -1,12 +1,15 @@
 import tkinter as tk
 
 from dataclasses import dataclass
+from tkinter import messagebox
+
+from actions.import_data import Actions
 
 @dataclass
 class Widget():
     root: tk.Tk
-    browse_button: object
-    funct: object = None
+    run_compare_files: object = None
+    path_export: str = ""
 
     def display(self):
         self.FrameBtn = tk.LabelFrame(self.root)
@@ -21,7 +24,7 @@ class Widget():
             height=1,
             borderwidth=5,
             relief="raised",
-            command=self.browse_button)
+            command=self.handle_click_btn_sortie)
         self.BtnSortie.place(relx=0.1, rely=0.2)
         
         # Button Comparer
@@ -37,7 +40,7 @@ class Widget():
             activebackground="#004C8C",
             foreground="black",
             activeforeground="white",
-            command=self.funct)
+            command=self.handle_run_compare_files)
         self.BtnComparer.place(relx=0.38, rely=0.2)
         
         # Button Fermer
@@ -55,3 +58,17 @@ class Widget():
             activeforeground="white",
             command=self.root.destroy)
         self.BtnFermer.place(relx=0.65, rely=0.2)
+    
+    def handle_click_btn_sortie(self):
+        self.path_export = Actions.ask_export_directory(self)
+        print(self.path_export)
+    
+    def handle_run_compare_files(self):
+        if self.path_export:
+            try:
+                self.run_compare_files(self.path_export)
+                messagebox.showinfo('Succès', f"Votre fichier de comparaison est prêt.\nEmplacement : {self.path_export}")
+            except:
+                messagebox.showerror("Information", "Veuiller sélectionner un dossier de sortie correct")
+        else:
+            messagebox.showerror("Information", "Veuiller sélectionner un dossier de sortie")

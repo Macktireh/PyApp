@@ -1,7 +1,6 @@
-if True:
-    import tkinter as tk
-    from tkinter import PhotoImage
-    from ui import AppUI
+import tkinter as tk
+from tkinter import PhotoImage
+from appwindow import MainWindow
 
 
 splach_root = tk.Tk()
@@ -19,7 +18,6 @@ y = splach_root.winfo_screenheight() // 2 - win_height // 2
 splach_root.geometry("{}x{}+{}+{}".format(width, height, x, y))
 splach_root.config(background="#f1f1f1")
 splach_root.deiconify()
-
 
 def Exit(e):
     splach_root.quit()
@@ -50,7 +48,7 @@ splach_label = tk.Label(
 
 def main_window():
     splach_root.destroy()
-    app = AppUI()
+    MainWindow().start()
 
 for b in [BtnExit]:
    b.bind("<Enter>",change_bgcolor)

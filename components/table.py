@@ -8,15 +8,12 @@ from dataclasses import dataclass
 @dataclass
 class ShowData():
     root: tk.Tk
-    # setState: str
-    df: pandas.core.frame.DataFrame = pandas.DataFrame()
-    path: str = ""
 
-    def display(self):
+    def display(self, path, df):
         self.show_data = tk.Toplevel(self.root)
         self.show_data.title("Previous Data")
         self.show_data.iconbitmap("static/img/TotalEnergies.ico")
-        self.show_data.geometry("800x450+15+15")
+        self.show_data.geometry("800x450+30+40")
         self.show_data.resizable(width=False, height=False)
         
         # Add Some Style
@@ -41,7 +38,7 @@ class ShowData():
             self.tv_All_Data.delete(*self.tv_All_Data.get_children())
             return None
 
-        frame1 = tk.LabelFrame(self.show_data, text=f"{self.path}")
+        frame1 = tk.LabelFrame(self.show_data, text=f"{path}")
         frame1.place(height=420, width=768, rely=0.02, relx=0.02)
 
         self.tv_All_Data = ttk.Treeview(frame1)
@@ -71,14 +68,14 @@ class ShowData():
         # vider le treeview
         self.tv_All_Data.delete(*self.tv_All_Data.get_children())
 
-        self.tv_All_Data["column"] = list(self.df.columns)
+        self.tv_All_Data["column"] = list(df.columns)
         self.tv_All_Data["show"] = "headings"
 
         for column in self.tv_All_Data["columns"]:
             self.tv_All_Data.column(column, anchor="w")
             self.tv_All_Data.heading(column, anchor="w", text=column)
 
-        self.df_rows = self.df.to_numpy().tolist()
+        self.df_rows = df.to_numpy().tolist()
         for row in self.df_rows:
             if count % 2 == 0:
                 self.tv_All_Data.insert(
@@ -101,7 +98,3 @@ class ShowData():
         self.tv_All_Data.insert("", "end", values="")
 
         return None
-
-
-    def updateState(self):
-        self.path, self.df = self.setState()

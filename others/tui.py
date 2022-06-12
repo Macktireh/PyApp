@@ -61,7 +61,7 @@ win.mainloop()
 """
 # pandas.core.frame.DataFrame
 
-from window import *
+from appwindow import MainWindow
 
 
 myWindow = MainWindow()
