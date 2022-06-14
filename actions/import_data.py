@@ -21,7 +21,7 @@ class Actions:
         if path_filename:
             """Si le fichier sélectionné est valide, cela chargera le fichier"""
             try:
-                df = EuroShare.LoadData(self, path_filename[-4:],path_filename)
+                df = EuroShare.LoadData(self, path_filename.split(".")[-1],path_filename)
             except ValueError or AttributeError:
                 tk.messagebox.showerror("Information", "Le fichier que vous avez choisi n'est pas valide")
                 return None
