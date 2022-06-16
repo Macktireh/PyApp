@@ -33,7 +33,7 @@ class EuroShare():
     def LoadData(self, typ, path, sheet=""):
         if typ == '.csv':
             self.df = pd.read_csv(path)
-        elif typ in ['.xls', 'xlsx']:
+        elif typ in ['.xls', 'xlsx', 'xlsb']:
             if sheet is None or sheet == "":
                 self.df = pd.read_excel(path)
             else:

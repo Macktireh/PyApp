@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Widget():
+class Widget:
     root: tk.Tk
     title: str
     excelIcon: tk.PhotoImage
@@ -17,7 +17,7 @@ class Widget():
     path: str = ""
     df: pandas.core.frame.DataFrame = pandas.DataFrame()
 
-    def display(self, path):
+    def display(self):
         Frame = tk.LabelFrame(
             self.root, 
             text=self.title, 
@@ -28,10 +28,24 @@ class Widget():
             
         self.VarLabelPath = tk.StringVar()
         self.VarLabelPath.set('Aucun fichier Excel importer')
-        self.LabelPath = tk.Label(Frame, textvariable=self.VarLabelPath, bg="#FAEBD7")
+        self.LabelPath = tk.Label(Frame, textvariable=self.VarLabelPath)
         self.LabelPath.pack(fill="x")
+
+        self.LabelSheetName = tk.Label(
+            Frame,
+            text="Cochez et renseigner si vous souhaiter importer une \n                     feuille d'Excel en particulier par défaut première feuille (facultatif)",
+        ).place(relx=0.45, rely=0.2)
         
-        # Button import avec icon
+        self.VarCheckBtn = tk.BooleanVar()
+        self.VarCheckBtn.set(False)
+        CheckButton = tk.Checkbutton(
+            Frame,
+            var=self.VarCheckBtn,
+            bd=1,
+            relief="raised",
+            # command=CheckButton1,
+        ).place(relx=0.5, rely=0.2)
+
         excelBtn = tk.Button(
             Frame,
             image=self.excelIcon,
@@ -44,15 +58,6 @@ class Widget():
             command=self.run_action,
             pady=2
         ).place(relx=0.23, rely=0.21)
-
-        listbox = tk.Listbox(Frame)
-        listbox.place(relx=0.65, rely=0.17, relheight=0.8, relwidth=0.3)
-        
-        treescrolly = tk.Scrollbar(listbox, orient="vertical", command=listbox.yview)
-        treescrollx = tk.Scrollbar(listbox, orient="horizontal", command=listbox.xview)
-        listbox.configure(xscrollcommand=treescrollx.set, yscrollcommand=treescrolly.set)
-        treescrollx.pack(side="bottom", fill="x")
-        treescrolly.pack(side="right", fill="y")
 
         ViewDataBtn = tk.Button(
             Frame,
@@ -67,7 +72,8 @@ class Widget():
         ).place(relx=0.35, rely=0.8)
 
     def run_action(self):
-        self.path, self.df = self.import_data_from_excel()
-        self.VarLabelPath.set(f'{self.path}')
-        # self.LabelPath.configure(text=f'{self.path}')
-        # print(self.path)
+        try:
+            self.path, self.df = self.import_data_from_excel()
+            self.VarLabelPath.set(f'{self.path}')
+        except:
+            pass

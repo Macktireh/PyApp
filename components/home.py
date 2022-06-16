@@ -1,15 +1,11 @@
 import tkinter as tk
-import pandas
 
-from tkinter import filedialog
 from dataclasses import dataclass
-
-
 from components.toplevel import Toplevel_Window
 
 
 @dataclass
-class Home():
+class Home:
     root: tk.Tk
     excelIcon: tk.PhotoImage
     viewIcon: tk.PhotoImage
@@ -26,7 +22,7 @@ class Home():
             borderwidth=5,
             relief="raised",
             font=("Helvetica", 10),
-            command=self.Window_SAP_vs_Sharepoint
+            command=self.Window_SAP_vs_Sharepoint,
         )
         self.Btn_SAP_vs_Sharepoint.place(relx=0.09, rely=0.2, relheight=0.15, relwidth=0.4)
 
@@ -40,7 +36,7 @@ class Home():
             borderwidth=5,
             relief="raised",
             font=("Helvetica", 10),
-            command=self.Window_EuroDataHos_vs_Sharepoint
+            command=self.Window_EuroDataHos_vs_Sharepoint,
         )
         self.Btn_EuroDataHOS_vs_Sharepoint.place(relx=0.51, rely=0.2, relheight=0.15, relwidth=0.4)
 
@@ -54,7 +50,7 @@ class Home():
             borderwidth=5,
             relief="raised",
             font=("Helvetica", 11),
-            command=self.root.quit
+            command=self.exit,
         )
         self.BtnExit.place(relx=0.35, rely=0.6, relheight=0.15, relwidth=0.3)
 
@@ -65,6 +61,7 @@ class Home():
             source = "SAP",
             excelIcon = self.excelIcon,
             viewIcon = self.viewIcon,
+            type_compare = "SapShare",
         ).display()
         
     def Window_EuroDataHos_vs_Sharepoint(self):
@@ -74,5 +71,8 @@ class Home():
             source = "EuroDataHOS",
             excelIcon = self.excelIcon,
             viewIcon = self.viewIcon,
+            type_compare = "EuroShare",
         ).display()
 
+    def exit(self):
+        self.root.quit()

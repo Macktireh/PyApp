@@ -45,13 +45,13 @@ class SapShare:
         return self.df
 
 
-    def preprocess(self, df, CC=True):
+    def preprocess(self, df):
         df['SAPCODE'] = df['SAPCODE'].astype(str)
         df['SAPCODE'] = df['SAPCODE'].str.strip()
         df = df.drop_duplicates(subset = "SAPCODE", keep = 'first')
         df['BusinessModel'] = df['BusinessModel'].astype(str)
-        if CC:
-            df['COUNTRYCODE'] = df['SAPCODE'].str.slice(0, 2)
+        df['COUNTRYCODE'] = df['SAPCODE'].str.slice(0, 2)
+
         return df
     
     def Preprocess_Sap(self, df):
@@ -110,10 +110,12 @@ class SapShare:
                         df_sharepoint['BusinessModel_source'].iloc[k] = df_sap_commun_avec_sh['BusinessModel_source'].iloc[j]
     
     def reduce(self):
+
         # charger les données EuroDataHOS et sharepoint
         # self.df_sap = self.LoadData('excel', self.path_data_HOS)
         # self.df_sharepoint = self.LoadData('excel', self.path_data_sharepoint)
-        df_sap_exp = self.preprocess(df=self.df_sap, CC=False)
+        df_sap_exp = self.preprocess(self.df_sap.drop('COUNTRYCODE', axis=1))
+        
         self.export_excel(path=self.path_Out, df=df_sap_exp, SheetName='SAP sans doublons')
         self.export_excel_add_new_sheet(path=self.path_Out, df=self.df_sharepoint, SheetName='StationData Brute')
 
@@ -143,7 +145,7 @@ class SapShare:
         
         for pays in tqdm(self.df_sap_commun_avec_sh['Affiliate'].unique()):
             print()
-            print("-"*23)
+            print("-"*35)
             print('Affiliates : ' + pays)
             print()
 

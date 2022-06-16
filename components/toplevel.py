@@ -1,21 +1,22 @@
-from cmath import e
-from random import setstate
 import tkinter as tk
 import pandas
 
 from tkinter import messagebox
 from dataclasses import dataclass
 from components import container_widget, container_button, table
+from api.sap_vs_sharepoint import SapShare
 from api.eurodatahos_vs_shrepoint import EuroShare
 from actions.import_data import Actions
 
+
 @dataclass
-class Toplevel_Window():
+class Toplevel_Window:
     root: tk.Tk
     title: str
     source: str
     excelIcon: tk.PhotoImage
     viewIcon: tk.PhotoImage
+    type_compare: str
     PathImport1: str = ""
     PathImport2: str = ""
     df1: pandas.core.frame.DataFrame = pandas.DataFrame()
@@ -49,9 +50,7 @@ class Toplevel_Window():
             import_data_from_excel=self.import_data_1,
             view_data=self.showTable_1
         )
-        widget_1.display(
-            self.PathImport1 if self.PathImport1 != "" else "test"
-        )
+        widget_1.display()
         
         widget_2 = container_widget.Widget(
             root = self.TopWindow,
@@ -63,22 +62,21 @@ class Toplevel_Window():
             import_data_from_excel=self.import_data_2,
             view_data=self.showTable_2
         )
-        widget_2.display(
-            self.PathImport2 if self.PathImport2 != "" else "test"
-        )
+        widget_2.display()
         
         container_btn = container_button.Widget(
-            root=self.TopWindow,
-            run_compare_files=self.run_compare_files
+            root = self.TopWindow,
+            run_compare_files = self.run_compare_files,
+            type_compare = self.type_compare,
         )
         container_btn.display()
     
     def import_data_1(self):
-        try:
+        # try:
             self.PathImport1, self.df1 = Actions.ImportData(self)
             return self.PathImport1, self.df1
-        except AttributeError:
-            messagebox.showerror("Information", "Le fichier que vous avez choisi n'est pas valide")
+        # except AttributeError:
+        #     messagebox.showerror("Information", "Le fichier que vous avez choisi n'est pas valide")
 
     def import_data_2(self):
         try:
@@ -94,4 +92,10 @@ class Toplevel_Window():
         table.ShowData(root=self.TopWindow).display(self.PathImport2, self.df2)
     
     def run_compare_files(self, path):
-        EuroShare(self.df1, self.df2, path).reduce()
+        if self.type_compare == "SapShare":
+            SapShare(self.df1, self.df2, path).reduce()
+        elif self.type_compare == "EuroShare":
+            EuroShare(self.df1, self.df2, path).reduce()
+        else:
+            print("pas de action")
+        

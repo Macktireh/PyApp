@@ -1,12 +1,11 @@
 import tkinter as tk
 
-import pandas
 from tkinter import ttk
 from dataclasses import dataclass
 
 
 @dataclass
-class ShowData():
+class ShowData:
     root: tk.Tk
 
     def display(self, path, df):

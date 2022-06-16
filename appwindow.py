@@ -1,11 +1,10 @@
 import tkinter as tk
-import pandas as pd
 
 from tkinter import PhotoImage
 from components.home import Home
 
 
-class MainWindow():
+class MainWindow:
 
     def __init__(self):
         # initialisation et configuration de fênetre principale
