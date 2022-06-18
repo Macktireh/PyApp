@@ -32,21 +32,6 @@ class Widget:
         self.LabelPath = tk.Label(Frame, textvariable=self.VarLabelPath)
         self.LabelPath.pack(fill="x")
 
-        # self.LabelSheetName = tk.Label(
-        #     Frame,
-        #     text="Cochez et renseigner si vous souhaiter importer une \n                     feuille d'Excel en particulier par défaut première feuille (facultatif)",
-        # ).place(relx=0.45, rely=0.2)
-        
-        # self.VarCheckBtn = tk.BooleanVar()
-        # self.VarCheckBtn.set(False)
-        # CheckButton = tk.Checkbutton(
-        #     Frame,
-        #     var=self.VarCheckBtn,
-        #     bd=1,
-        #     relief="raised",
-        #     # command=CheckButton1,
-        # ).place(relx=0.5, rely=0.2)
-
         excelBtn = tk.Button(
             Frame,
             image=self.excelIcon,
