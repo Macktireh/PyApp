@@ -2,6 +2,7 @@ import tkinter as tk
 import pandas
 
 from dataclasses import dataclass
+from tkinter import PhotoImage
 
 
 @dataclass
@@ -31,20 +32,20 @@ class Widget:
         self.LabelPath = tk.Label(Frame, textvariable=self.VarLabelPath)
         self.LabelPath.pack(fill="x")
 
-        self.LabelSheetName = tk.Label(
-            Frame,
-            text="Cochez et renseigner si vous souhaiter importer une \n                     feuille d'Excel en particulier par défaut première feuille (facultatif)",
-        ).place(relx=0.45, rely=0.2)
+        # self.LabelSheetName = tk.Label(
+        #     Frame,
+        #     text="Cochez et renseigner si vous souhaiter importer une \n                     feuille d'Excel en particulier par défaut première feuille (facultatif)",
+        # ).place(relx=0.45, rely=0.2)
         
-        self.VarCheckBtn = tk.BooleanVar()
-        self.VarCheckBtn.set(False)
-        CheckButton = tk.Checkbutton(
-            Frame,
-            var=self.VarCheckBtn,
-            bd=1,
-            relief="raised",
-            # command=CheckButton1,
-        ).place(relx=0.5, rely=0.2)
+        # self.VarCheckBtn = tk.BooleanVar()
+        # self.VarCheckBtn.set(False)
+        # CheckButton = tk.Checkbutton(
+        #     Frame,
+        #     var=self.VarCheckBtn,
+        #     bd=1,
+        #     relief="raised",
+        #     # command=CheckButton1,
+        # ).place(relx=0.5, rely=0.2)
 
         excelBtn = tk.Button(
             Frame,
@@ -58,6 +59,21 @@ class Widget:
             command=self.run_action,
             pady=2
         ).place(relx=0.23, rely=0.21)
+
+        self.csvIcon = PhotoImage(file="static/img/csv.png")
+        self.csvIcon = self.csvIcon.subsample(10, 10)
+        csvBtn = tk.Button(
+            Frame,
+            image=self.csvIcon,
+            text="Import data from CSV",
+            compound="top",
+            height=70,
+            width=160,
+            bd=1,
+            bg="#DCDCDC",
+            command=self.run_action,
+            pady=2
+        ).place(relx=0.53, rely=0.21)
 
         ViewDataBtn = tk.Button(
             Frame,

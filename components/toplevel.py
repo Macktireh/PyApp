@@ -72,11 +72,11 @@ class Toplevel_Window:
         container_btn.display()
     
     def import_data_1(self):
-        # try:
+        try:
             self.PathImport1, self.df1 = Actions.ImportData(self)
             return self.PathImport1, self.df1
-        # except AttributeError:
-        #     messagebox.showerror("Information", "Le fichier que vous avez choisi n'est pas valide")
+        except AttributeError:
+            messagebox.showerror("Information", "Le fichier que vous avez choisi n'est pas valide")
 
     def import_data_2(self):
         try:

@@ -50,6 +50,7 @@ class SapShare:
         df['SAPCODE'] = df['SAPCODE'].str.strip()
         df = df.drop_duplicates(subset = "SAPCODE", keep = 'first')
         df['BusinessModel'] = df['BusinessModel'].astype(str)
+        df['BusinessModel'] = df['BusinessModel'].str.strip()
         df['COUNTRYCODE'] = df['SAPCODE'].str.slice(0, 2)
 
         return df

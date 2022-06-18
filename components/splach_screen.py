@@ -69,7 +69,7 @@ class SplachScreen:
 
     def start(self):
         self.display()
-        self.root.after(1000, self.main_window)
+        self.root.after(10000, self.main_window)
         self.root.mainloop()
     
     def main_window(self):
