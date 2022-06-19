@@ -14,8 +14,8 @@ path_data_input = "InputData/processes.xlsx"
 # path_Out = f"OutputData/KPI-SIS-AFRIQUE-S{Week}-{today}.xlsx"
 path_Out = f"OutputData/SAP_vs_Sharepoint_1-{today}.xlsx"
 
-df_hos = pd.read_excel(r"C:\Users\J1049122\Desktop\Station Data\SAP\ALL Data SAP brute 13.06.2022.xlsx", sheet_name="AFR")
-df_sharepoint = pd.read_excel(r"C:\Users\J1049122\Desktop\Station Data\SAP\ALL Data SAP brute 13.06.2022.xlsx", sheet_name="StationData")
+# df_hos = pd.read_excel(r"C:\Users\J1049122\Desktop\Station Data\SAP\ALL Data SAP brute 13.06.2022.xlsx", sheet_name="AFR")
+# df_sharepoint = pd.read_excel(r"C:\Users\J1049122\Desktop\Station Data\SAP\ALL Data SAP brute 13.06.2022.xlsx", sheet_name="StationData")
 
 # df_hos=df_hos.drop_duplicates(subset = "SAPCODE", keep = 'first')
 

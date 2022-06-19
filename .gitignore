@@ -1,8 +1,14 @@
 .venv
 __pycache__
 *.pyc
+input
 OutputData
 old
+out
+build
+dist
+
+main.spec
 DataAppWeek48.xlsx
 DataAppWeek52.xlsx
 processes.pbix

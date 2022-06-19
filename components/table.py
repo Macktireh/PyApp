@@ -14,7 +14,9 @@ class ShowData:
         self.show_data.iconbitmap("static/img/TotalEnergies.ico")
         self.show_data.geometry("800x450+30+40")
         self.show_data.resizable(width=False, height=False)
+        self.Table(path, df)
         
+    def Table(self, path, df):
         # Add Some Style
         style = ttk.Style()
 
@@ -93,7 +95,4 @@ class ShowData:
                     tags=("oddrow",),
                 )
             count += 1
-
         self.tv_All_Data.insert("", "end", values="")
-
-        return None
