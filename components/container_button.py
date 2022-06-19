@@ -61,7 +61,7 @@ class Widget:
     
     def handle_click_btn_sortie(self):
         self.path_export = Actions.ask_export_directory(self, self.type_compare)
-        # print(self.path_export)
+        print(self.path_export)
     
     def handle_run_compare_files(self):
         if self.path_export:

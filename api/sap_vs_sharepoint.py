@@ -44,13 +44,15 @@ class SapShare:
             pass
         return self.df
 
-
     def preprocess(self, df):
         df['SAPCODE'] = df['SAPCODE'].astype(str)
         df['SAPCODE'] = df['SAPCODE'].str.strip()
-        df = df.drop_duplicates(subset = "SAPCODE", keep = 'first')
+        df['IsActiveSite'] = df['IsActiveSite'].astype(str)
+        df['IsActiveSite'] = df['IsActiveSite'].str.strip()
         df['BusinessModel'] = df['BusinessModel'].astype(str)
         df['BusinessModel'] = df['BusinessModel'].str.strip()
+
+        df = df.drop_duplicates(subset = "SAPCODE", keep = 'first')
         df['COUNTRYCODE'] = df['SAPCODE'].str.slice(0, 2)
 
         return df
@@ -106,9 +108,13 @@ class SapShare:
         if df_sap_commun_avec_sh.shape[0] > 0:
             for j in tqdm(range(df_sap_commun_avec_sh.shape[0])):
                 for k in range(df_sharepoint.shape[0]):
-                    if df_sap_commun_avec_sh['SAPCODE'].iloc[j] == df_sharepoint['SAPCODE'].iloc[k] and df_sharepoint['BusinessModel'].iloc[k].lower() not in ['shop', 'stand', 'alone', 'standalone']:
+                    if df_sap_commun_avec_sh['SAPCODE'].iloc[j] == df_sharepoint['SAPCODE'].iloc[k] and df_sap_commun_avec_sh['BusinessModel'].iloc[j] != df_sharepoint['BusinessModel'].iloc[k]:
                         df_sharepoint['BusinessModel'].iloc[k] = df_sap_commun_avec_sh['BusinessModel'].iloc[j]
                         df_sharepoint['BusinessModel_source'].iloc[k] = df_sap_commun_avec_sh['BusinessModel_source'].iloc[j]
+
+                    if df_sap_commun_avec_sh['SAPCODE'].iloc[j] == df_sharepoint['SAPCODE'].iloc[k] and df_sap_commun_avec_sh['IsActiveSite'].iloc[j] != df_sharepoint['IsActiveSite'].iloc[k]:
+                        df_sharepoint['IsActiveSite'].iloc[k] = df_sap_commun_avec_sh['IsActiveSite'].iloc[j]
+                        df_sharepoint['IsActiveSite_source'].iloc[k] = df_sap_commun_avec_sh['IsActiveSite_source'].iloc[j]
     
     def reduce(self):
 
@@ -129,6 +135,10 @@ class SapShare:
         # add column
         self.df_sap['BusinessModel_source'] = "SAP"
         self.df_sharepoint['BusinessModel_source'] = "STATION DATA"
+
+        self.df_sap['IsActiveSite_source'] = "SAP"
+        self.df_sharepoint['IsActiveSite_source'] = "STATION DATA"
+
         self.df_sap['Data_Source'] = "Ecart SAP"
         self.df_sharepoint['Data_Source'] = "STATION DATA"
         
@@ -144,18 +154,17 @@ class SapShare:
         print("-"*23)
         print()
         
-        for pays in tqdm(self.df_sap_commun_avec_sh['Affiliate'].unique()):
-            print()
-            print("-"*35)
-            print('Affiliates : ' + pays)
-            print()
+        # for pays in tqdm(self.df_sap_commun_avec_sh['Affiliate'].unique()):
+        #     print()
+        #     print("-"*35)
+        #     print('Affiliates : ' + pays)
+        #     print()
 
-            self.df_1 = self.df_sap_commun_avec_sh[self.df_sap_commun_avec_sh['Affiliate'] == pays]
-            self.df_2 = self.df_sharepoint[self.df_sharepoint['Affiliate'] == pays]
-            self.df_3 = self.ecart_sap[self.ecart_sap['Affiliate'] == pays]
+            # self.df_1 = self.df_sap_commun_avec_sh[self.df_sap_commun_avec_sh['Affiliate'] == pays]
+            # self.df_2 = self.df_sharepoint[self.df_sharepoint['Affiliate'] == pays]
+            # self.df_3 = self.ecart_sap[self.ecart_sap['Affiliate'] == pays]
 
-            self.Update_EcartSAP_vs_sh(self.df_1, self.df_2)
-
-            self.df_final = self.df_2.append(self.df_3, ignore_index=True)
-
-            self.export_excel_add_new_sheet(path=self.path_Out, df=self.df_final, SheetName=pays)
+        self.Update_EcartSAP_vs_sh(self.df_sap_commun_avec_sh, self.df_sharepoint)
+        self.df_final = self.df_sharepoint.append(self.ecart_sap, ignore_index=True)
+        self.export_excel_add_new_sheet(path=self.path_Out, df=self.df_final, SheetName="Comparaison")
+        self.export_excel_add_new_sheet(path=self.path_Out, df=self.ecart_sh, SheetName="ecart StationData")
