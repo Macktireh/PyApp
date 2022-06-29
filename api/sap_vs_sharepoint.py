@@ -34,12 +34,12 @@ class SapShare:
     
     def LoadData(self, typ, path, sheet=""):
         if typ == '.csv':
-            self.df = pd.read_csv(path)
+            self.df = pd.read_csv(path, dtype=str)
         elif typ in ['.xls', 'xlsx']:
             if sheet is None or sheet == "":
-                self.df = pd.read_excel(path)
+                self.df = pd.read_excel(path, dtype=str)
             else:
-                self.df= pd.read_excel(path, sheet_name=sheet)
+                self.df= pd.read_excel(path, sheet_name=sheet, dtype=str)
         else:
             pass
         return self.df
@@ -53,22 +53,24 @@ class SapShare:
         df['BusinessModel'] = df['BusinessModel'].str.strip()
 
         df = df.drop_duplicates(subset = "SAPCODE", keep = 'first')
-        df['COUNTRYCODE'] = df['SAPCODE'].str.slice(0, 2)
+        # df['COUNTRYCODE'] = df['SAPCODE'].str.slice(0, 2)
 
         return df
     
     def Preprocess_Sap(self, df):
-        df = df[['SAPCODE', 'BusinessModel', 'IsActiveSite']]
+        df = df[['SAPCODE', 'BusinessModel', 'IsActiveSite', 'COUNTRYCODE']]
         df = self.preprocess(df)
         return df
     
     def Preprocess_Sharepoint(self, df):
+        df['COUNTRYCODE'] = df['SAPCODE'].str.slice(0, 2)
         df = self.preprocess(df)
         return df
     
     def Merge_Data(self, df_sap, df_sh):
         cols = list(df_sh.columns)
-        df_sh = df_sh.drop_duplicates(subset = 'COUNTRYCODE', keep = 'first')[['Zone', 'SubZone', 'Affiliate', 'COUNTRYCODE']]
+        df_sh = df_sh.drop_duplicates(subset = 'COUNTRYCODE', keep = 'first')[['SubZone', 'Affiliate', 'COUNTRYCODE']]
+
         df_sap = df_sap.merge(df_sh, how='left', on='COUNTRYCODE')
 
         # supprimer les nan dans la colonne Affiliate méthode 1
@@ -121,10 +123,12 @@ class SapShare:
         # charger les données EuroDataHOS et sharepoint
         # self.df_sap = self.LoadData('excel', self.path_data_HOS)
         # self.df_sharepoint = self.LoadData('excel', self.path_data_sharepoint)
-        df_sap_exp = self.preprocess(self.df_sap.drop('COUNTRYCODE', axis=1))
+        # df_sap_exp = self.preprocess(self.df_sap.drop('COUNTRYCODE', axis=1))
+        # self.df_sap = self.df_sap[self.df_sap['COUNTRYCODE'] == "KH"]
+        # self.df_sharepoint = self.df_sharepoint[self.df_sharepoint['Affiliate'] == "Cambodia"]
         
-        self.export_excel(path=self.path_Out, df=df_sap_exp, SheetName='SAP sans doublons')
-        self.export_excel_add_new_sheet(path=self.path_Out, df=self.df_sharepoint, SheetName='StationData Brute')
+        self.export_excel(path=self.path_Out, df=self.df_sap, SheetName='SAP All Zone')
+        self.export_excel_add_new_sheet(path=self.path_Out, df=self.df_sharepoint, SheetName='StationData')
 
         # Prétraiter les données EuroDataHOS et sharepoint
         self.df_sap = self.Preprocess_Sap(self.df_sap)

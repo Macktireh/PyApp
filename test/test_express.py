@@ -14,8 +14,8 @@ path_data_input = "InputData/processes.xlsx"
 # path_Out = f"OutputData/KPI-SIS-AFRIQUE-S{Week}-{today}.xlsx"
 path_Out = f"OutputData/SAP_vs_Sharepoint_1-{today}.xlsx"
 
-# df_hos = pd.read_excel(r"C:\Users\J1049122\Desktop\Station Data\SAP\ALL Data SAP brute 13.06.2022.xlsx", sheet_name="AFR")
-# df_sharepoint = pd.read_excel(r"C:\Users\J1049122\Desktop\Station Data\SAP\ALL Data SAP brute 13.06.2022.xlsx", sheet_name="StationData")
+df_hos = pd.read_excel(r"C:\Users\J1049122\Desktop\Station Data\SAP\ALL Data SAP brute 13.06.2022.xlsx", sheet_name="SAP All Zone")
+df_sharepoint = pd.read_excel(r"C:\Users\J1049122\Desktop\Station Data\SAP\ALL Data SAP brute 13.06.2022.xlsx", sheet_name="StationData")
 
 # df_hos=df_hos.drop_duplicates(subset = "SAPCODE", keep = 'first')
 
@@ -24,16 +24,16 @@ path_Out = f"OutputData/SAP_vs_Sharepoint_1-{today}.xlsx"
 # df_hos.to_excel('df_sap.xlsx', index=False)
 
 start = datetime.now()
-# m = SapShare(df_hos, df_sharepoint, path_Out)
-# m.reduce()
+m = SapShare(df_hos, df_sharepoint, path_Out)
+m.reduce()
 
 # os.system('cls' if os.name == 'nt' else 'clear')
 # print(type(df_hos))
 
-xls = pd.ExcelFile(path_data_input)
-print(xls)
-print()
-print(xls.sheet_names)
+# xls = pd.ExcelFile(path_data_input)
+# print(xls)
+# print()
+# print(xls.sheet_names)
 
 print()
 print("--------------------")
