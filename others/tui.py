@@ -66,3 +66,6 @@ from appwindow import MainWindow
 
 myWindow = MainWindow()
 myWindow.start()
+
+
+# pyinstaller --noconfirm --onefile --console --icon "C:/Users/J1049122/Desktop/Station Data/Python/build/static/img/TotalEnergies.ico"  "C:/Users/J1049122/Desktop/Station Data/Python/build/main.py"

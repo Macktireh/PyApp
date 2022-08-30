@@ -1,10 +1,11 @@
-import tkinter as tk
 import pandas
+import tkinter as tk
 
+from datetime import datetime
 from tkinter import messagebox
 from dataclasses import dataclass
 from components import container_widget, container_button, table
-from api.sap_vs_sharepoint import SapShare
+from api.sap_vs_stationData import SapShare
 from api.eurodatahos_vs_shrepoint import EuroShare
 from actions.import_data import Actions
 
@@ -54,7 +55,7 @@ class Toplevel_Window:
         
         widget_2 = container_widget.Widget(
             root = self.TopWindow,
-            title = 'Sharepoint',
+            title = 'StationData',
             excelIcon = self.excelIcon,
             viewIcon = self.viewIcon,
             x=0.02,
@@ -92,10 +93,23 @@ class Toplevel_Window:
         table.ShowData(root=self.TopWindow).display(self.PathImport2, self.df2)
     
     def run_compare_files(self, path):
+        start = datetime.now()
         if self.type_compare == "SapShare":
             SapShare(self.df1, self.df2, path).reduce()
         elif self.type_compare == "EuroShare":
             EuroShare(self.df1, self.df2, path).reduce()
         else:
-            print("pas de action")
-        
+            return print("pas de action")
+        end = datetime.now()
+        self.time_done(end, start)
+    
+    def time_done(self, end, start):
+        print()
+        print("--------------------")
+        print("Terminer avec succès")
+        print("--------------------")
+        print()
+
+        tm = end - start
+        print("temps d'exécution :", tm)
+        print()

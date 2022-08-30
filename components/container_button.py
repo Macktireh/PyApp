@@ -65,10 +65,10 @@ class Widget:
     
     def handle_run_compare_files(self):
         if self.path_export:
-            try:
-                self.run_compare_files(self.path_export)
-                messagebox.showinfo('Succès', f"Votre fichier de comparaison est prêt.\nEmplacement : {self.path_export}")
-            except:
-                messagebox.showerror("Information", "Veuiller sélectionner un dossier de sortie correct")
+            # try:
+            self.run_compare_files(self.path_export)
+            messagebox.showinfo('Succès', f"Votre fichier de comparaison est prêt.\nEmplacement : {self.path_export}")
+            # except:
+            #     messagebox.showerror("Information", "Veuiller sélectionner un dossier de sortie correct")
         else:
             messagebox.showerror("Information", "Veuiller sélectionner un dossier de sortie")

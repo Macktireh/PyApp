@@ -4,18 +4,18 @@ import os
 import pandas as pd
 
 from api.eurodatahos_vs_shrepoint import EuroShare
-from api.sap_vs_sharepoint import SapShare
+from api.sap_vs_stationData import SapShare
 
 
 Week = '01'
 today = date.today().strftime("%d%m%y")
-path_data_input = "InputData/processes.xlsx"
+path_data_input = r"C:\Users\J1049122\Desktop\Station Data\SAP\SAP_STATIONDATA.xlsx"
 # path_data_sharepoint = "E:/AppTotalEnergies/SRC-Python-comparaison/InputData/sharepoint1.xlsx"
 # path_Out = f"OutputData/KPI-SIS-AFRIQUE-S{Week}-{today}.xlsx"
-path_Out = f"OutputData/SAP_vs_Sharepoint_1-{today}.xlsx"
+path_Out = f"OUT/SAP_vs_Sharepoint-test-{today}.xlsx"
 
-df_hos = pd.read_excel(r"C:\Users\J1049122\Desktop\Station Data\SAP\ALL Data SAP brute 13.06.2022.xlsx", sheet_name="SAP All Zone")
-df_sharepoint = pd.read_excel(r"C:\Users\J1049122\Desktop\Station Data\SAP\ALL Data SAP brute 13.06.2022.xlsx", sheet_name="StationData")
+df_hos = pd.read_excel(r"Input/SAP.xlsx", keep_default_na=False)
+df_sharepoint = pd.read_excel(r"Input/StationData.xlsx", keep_default_na=False)
 
 # df_hos=df_hos.drop_duplicates(subset = "SAPCODE", keep = 'first')
 
