@@ -1,7 +1,7 @@
 ## Setup project
 
 ```bash
-mddir PyAppTk && cd PyAppTk
+mkdir PyAppTk && cd PyAppTk
 ```
 
 ```bash
