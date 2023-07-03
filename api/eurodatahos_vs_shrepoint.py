@@ -1,10 +1,9 @@
+import os
 import pandas as pd
 import numpy as np
-import os
 
-from datetime import date, datetime
-from openpyxl import load_workbook
 from tqdm import tqdm
+from openpyxl import load_workbook
 
 
 class EuroShare:
@@ -31,7 +30,7 @@ class EuroShare:
         return self.ecart_X, self.ecart_Y, self.commun
 
     def LoadData(self, typ, path, sheet=""):
-        if typ == '.csv':
+        if typ in ['.csv', 'csv']:
             self.df = pd.read_csv(path)
         elif typ in ['.xls', 'xlsx', 'xlsb']:
             if sheet is None or sheet == "":

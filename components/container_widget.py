@@ -56,7 +56,7 @@ class Widget:
             width=160,
             bd=1,
             bg="#DCDCDC",
-            command=self.run_action,
+            command=lambda: self.run_action(".csv"),
             pady=2
         ).place(relx=0.53, rely=0.21)
 
@@ -72,9 +72,9 @@ class Widget:
             command=self.view_data,
         ).place(relx=0.35, rely=0.8)
 
-    def run_action(self):
+    def run_action(self, fileExtension=".xlsx"):
         try:
-            self.path, self.df = self.import_data_from_excel()
+            self.path, self.df = self.import_data_from_excel(fileExtension=fileExtension)
             self.VarLabelPath.set(f'{self.path}')
         except:
             pass
