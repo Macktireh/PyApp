@@ -7,7 +7,7 @@ from openpyxl import load_workbook
 from tqdm import tqdm
 
 
-class EuroShare():
+class EuroShare:
     """Cette class permet de comparer les données EuroDataHOS et Sharepoint et pour cela elle contient plusieures méthodes:
         Méthdoes:
         comperer : permet 
